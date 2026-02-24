@@ -13,11 +13,12 @@ app.listen(PORT, () => console.log(`This app is running on port ${PORT}`));
 
 app.post("/sendForm", async (req, res) => {
     try {
+        const createdAt = Date.now();
         const burnoutScore = req.body.burnoutScore;
         const userName = req.body.userName;
         const query = await db.query(
-            `INSERT INTO burnoutrating (burnoutscore, username) VALUES ($1, $2)`,
-            [burnoutScore, userName]
+            `INSERT INTO burnoutrating (burnoutscore, username, created_at) VALUES ($1, $2, $3)`,
+            [burnoutScore, userName, createdAt]
         );
         res.json({ status: "success", values: burnoutScore });
     } catch (error) {
