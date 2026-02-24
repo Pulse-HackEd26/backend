@@ -35,7 +35,7 @@ app.get('/readForm', async (req, res) => {
     }
 });
 
-app.post("/sendForm", async (req, res) => {
+app.post("/userForm", async (req, res) => {
     try {
         const userName = req.body.userName;
         const password = req.body.password;
