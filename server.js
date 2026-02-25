@@ -26,13 +26,10 @@ app.post("/sendForm", async (req, res) => {
     }
 });
 
-app.post('/readForm', async (req, res) => {
+app.get('/readForm/:username', async (req, res) => {
     try {
-        const userName = req.body.userName;
-        const query = await db.query(`SELECT * FROM burnoutrating WHERE username = $1 ORDER BY id DESC LIMIT 7;`,[
-            userName
-        ]);
-        res.json(query.rows);
+        const query = await db.query(`SELECT * FROM burnoutrating WHERE username = $1 ORDER BY id DESC LIMIT 20;`,[req.params.username]);
+        res.json(await query.rows);
     } catch (error) {
         console.log("db error: ", error);
         res.status(500).json({ Error: error.message });
