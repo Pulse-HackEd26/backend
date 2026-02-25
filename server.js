@@ -26,9 +26,12 @@ app.post("/sendForm", async (req, res) => {
     }
 });
 
-app.get('/readForm', async (req, res) => {
+app.post('/readForm', async (req, res) => {
     try {
-        const query = await db.query(`SELECT * FROM burnoutrating ORDER BY id DESC LIMIT 20;`);
+        const userName = req.body.userName;
+        const query = await db.query(`SELECT * FROM burnoutrating WHERE username = $1 ORDER BY id DESC LIMIT 7;`,[
+            userName
+        ]);
         res.json(query.rows);
     } catch (error) {
         console.log("db error: ", error);
